@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "van-button": "../../miniprogram_modules/@vant/button/index",
+    "van-icon": "../../miniprogram_modules/@vant/icon/index"
+  }
+}
