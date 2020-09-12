@@ -24,7 +24,7 @@ cloud.init({
 exports.main = async (event:any) => {
   console.log(event);
   
-  let { peopleFileID, peopleFileName, carFileID, carFileName} = event
+  let { peopleFileID, peopleFileName, carFileID} = event
   const peopleFile = await cloud.downloadFile({
     fileID: peopleFileID,
   })
@@ -53,12 +53,16 @@ exports.main = async (event:any) => {
   }
   if (postions.length !== peopleWJ.length){
     return {
-      errMsg:''
+      errMsg:'员工数量与岗位数量不匹配'
     }
   }
+  for (let i=0; i<peopleWJ.length; i++){
+    peopleWJ.position = postions[i]
+  }
+
   const res_wb = {
     Sheets:{
-        sheet1: XLSX.utils.json_to_sheet(wj)
+        sheet1: XLSX.utils.json_to_sheet(peopleWJ)
     },
     SheetNames:['sheet1']
 }
@@ -67,7 +71,7 @@ exports.main = async (event:any) => {
     })
 
   const res_upload = await cloud.uploadFile({
-    cloudPath: 'res_' + fileName, res_buffer,
+    cloudPath: 'res_' + peopleFileName, res_buffer,
     fileContent: res_buffer,
   })
   console.log(res_upload);
