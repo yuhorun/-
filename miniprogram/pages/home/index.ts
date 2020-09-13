@@ -1,13 +1,16 @@
 // index.ts
 // 获取应用实例
 
-const app = getApp<IAppOption>()
+import  Dialog  from '../../miniprogram_modules/@vant/dialog/dialog'
+
 Page({
   data: {
+    show:true,
     peopleFileID:'',
     peopleFileName:'',
     carFileID:'',
-    carFileName:''
+    carFileName:'',
+    resUrl:''
   },
 
   onReady: function () {
@@ -26,10 +29,14 @@ Page({
         let path = res.tempFiles[0].path
         let fileName = res.tempFiles[0].name
         const cloudPath = 'req_people_' + new Date().getTime() + '.' +  path.split('.').pop()
+        wx.showLoading({
+          title:'加载中...'
+        })
         wx.cloud.uploadFile({
           cloudPath: cloudPath,
           filePath:path,
           success: (res:any)=>{
+            wx.hideLoading()
             console.log('上传文件成功', res.fileID);
             this.setData({
               peopleFileID: res.fileID,
@@ -51,10 +58,14 @@ Page({
         let path = res.tempFiles[0].path
         let fileName = res.tempFiles[0].name
         const cloudPath = 'req_car_' + new Date().getTime() + '.' +  path.split('.').pop()
+        wx.showLoading({
+          title:'加载中...'
+        })
         wx.cloud.uploadFile({
           cloudPath: cloudPath,
           filePath:path,
           success: (res:any)=>{
+            wx.hideLoading()
             console.log('上传文件成功', res.fileID);
             this.setData({
               carFileID: res.fileID,
@@ -69,11 +80,51 @@ Page({
     })
   },
   getRes(){
+    if (!this.data.carFileName || !this.data.peopleFileName){
+      wx.showToast({
+        title:'还未选择文件',
+        icon:'none',
+        duration:1000
+      })
+      return
+    }
+    wx.showLoading({
+      title:'稍等...'
+    })
     wx.cloud.callFunction({
       name: 'parser', 
       data:this.data,
-      complete: (res:any) => {
+      success: (res:any) => {
         console.log('callFunction test result: ', res)
+        if (res.result.fileList[0].tempFileURL){
+          wx.hideLoading()
+          Dialog.alert({
+            title: '分配成功',
+            message:"点击确认复制下载链接，到浏览器打开",
+          }).then(()=>{
+            wx.setClipboardData({
+              data: res.result.fileList[0].tempFileURL,
+              success: (res:any)=>{
+                wx.getClipboardData({
+                  success: function(res) {
+                    console.log(res.data) // data
+                  }
+                })
+              },
+              fail:(e:any)=>{
+                console.log(e);
+                
+              }
+            })
+          })
+          Dialog.close()
+        }else{
+          wx.showToast({
+            title:'失败，请确认表格内容，重新提交文件',
+            icon:'none',
+            duration:2000
+          })
+        }
       }
     })
   }

@@ -45,21 +45,27 @@ exports.main = async (event:any) => {
         peopleWJ[randomIndex] = temp
     }
   }
-  let postions = []
+  console.log('carWJ',carWJ);
+  
+  let positions = []
   for (let i=0; i<carWJ.length; i++){
-      for (let j=0; j<Number(carWJ.number); j++){
-        postions.push(carWJ.positon)
+      for (let j=0; j<Number(carWJ[i].number); j++){
+        positions.push(carWJ[i].position)
       }
   }
-  if (postions.length !== peopleWJ.length){
+  console.log('postions',positions);
+  console.log('peopleWJ',peopleWJ);
+  
+  if (positions.length !== peopleWJ.length){
     return {
       errMsg:'员工数量与岗位数量不匹配'
     }
   }
-  for (let i=0; i<peopleWJ.length; i++){
-    peopleWJ.position = postions[i]
-  }
 
+  for (let i=0; i<peopleWJ.length; i++){
+    peopleWJ[i].position = positions[i]
+  }
+  console.log('peopleWJ',peopleWJ);
   const res_wb = {
     Sheets:{
         sheet1: XLSX.utils.json_to_sheet(peopleWJ)
@@ -71,7 +77,7 @@ exports.main = async (event:any) => {
     })
 
   const res_upload = await cloud.uploadFile({
-    cloudPath: 'res_' + peopleFileName, res_buffer,
+    cloudPath: 'res_position_' + peopleFileName, res_buffer,
     fileContent: res_buffer,
   })
   console.log(res_upload);

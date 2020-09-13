@@ -5,7 +5,7 @@
         <van-icon name="{{peopleFileName?'success':'plus'}}" size="50" class="icon" bindtap="peoplePlus"/>
     </view>
     <view class="card">
-        <text class="textTip">{{carFileName?carFileName:"选择车间表"}}</text>
+        <text class="textTip">{{carFileName?carFileName:"选择岗位表"}}</text>
         <van-icon name="{{carFileName?'success':'plus'}}" size="50" class="icon" bindtap="carPlus"/>
     </view>
 </view>
@@ -17,3 +17,5 @@
         </button>
     </view>
 </view>
+
+<van-dialog id="van-dialog"> </van-dialog>

@@ -23,11 +23,10 @@
       "./typings"
     ]
   },
-  "include": [
-    "./**/*.ts"
-  ],
   "exclude": [
     "node_modules",
-    "miniprogram/miniprogram_modules"
+    "functions/parser/node_modules",
+    "miniprogram/miniprogram_modules",
+    "typings"
   ]
 }
