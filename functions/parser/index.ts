@@ -23,61 +23,45 @@ cloud.init({
 // 云函数入口函数
 exports.main = async (event:any) => {
   console.log(event);
-  
-  let { peopleFileID, peopleFileName, carFileID} = event
-  const peopleFile = await cloud.downloadFile({
-    fileID: peopleFileID,
-  })
-  const carFile = await cloud.downloadFile({
-    fileID: carFileID,
-  })
-  const peopleFileBuffer = peopleFile.fileContent
-  const carFileBuffer = carFile.fileContent
-  const peopleWB = XLSX.read(peopleFileBuffer)
-  const carWB = XLSX.read(carFileBuffer)
-  const peopleWJ = XLSX.utils.sheet_to_json(peopleWB.Sheets[peopleWB.SheetNames[0]])
-  const carWJ = XLSX.utils.sheet_to_json(carWB.Sheets[carWB.SheetNames[0]])
-  if (peopleWJ.length){
-    for (let i=0; i<peopleWJ.length; i++){
-        const randomIndex = Math.floor(Math.random()*(peopleWJ.length-1))
-        const temp = peopleWJ[i]
-        peopleWJ[i] = peopleWJ[randomIndex]
-        peopleWJ[randomIndex] = temp
-    }
-  }
-  console.log('carWJ',carWJ);
-  
-  let positions = []
-  for (let i=0; i<carWJ.length; i++){
-      for (let j=0; j<Number(carWJ[i].number); j++){
-        positions.push(carWJ[i].position)
-      }
-  }
-  console.log('postions',positions);
-  console.log('peopleWJ',peopleWJ);
-  
-  if (positions.length !== peopleWJ.length){
-    return {
-      errMsg:'员工数量与岗位数量不匹配'
-    }
+  switch (event.action){
+    case 'objectfy': return await objectfy(event);
+    case 'tablify': return await tablify(event);
+    default: return {ok:false,msg:'没有此云函数'}
   }
 
-  for (let i=0; i<peopleWJ.length; i++){
-    peopleWJ[i].position = positions[i]
+}
+
+async function objectfy(event:any){
+  let { fileId } = event
+  const File = await cloud.downloadFile({
+    fileID: fileId,
+  })
+
+  const FileBuffer = File.fileContent
+  const WB = XLSX.read(FileBuffer)
+  const WJ = XLSX.utils.sheet_to_json(WB.Sheets[WB.SheetNames[0]])
+
+  return {
+    ok:true,
+    data:WJ
   }
-  console.log('peopleWJ',peopleWJ);
+}
+
+async function tablify(event:any){
+  let { obj, fileName } = event
+
   const res_wb = {
     Sheets:{
-        sheet1: XLSX.utils.json_to_sheet(peopleWJ)
+        sheet1: XLSX.utils.json_to_sheet(obj)
     },
     SheetNames:['sheet1']
-}
+  }
   const res_buffer = XLSX.write(res_wb,{
         type:'buffer'
     })
 
   const res_upload = await cloud.uploadFile({
-    cloudPath: 'res_position_' + peopleFileName, res_buffer,
+    cloudPath: 'res_position_' + new Date().getTime() + fileName,
     fileContent: res_buffer,
   })
   console.log(res_upload);
@@ -85,5 +69,8 @@ exports.main = async (event:any) => {
   const result = await cloud.getTempFileURL({
     fileList: fileList,
   })
-  return result
+  return {
+    ok:true,
+    data:result
+  }
 }

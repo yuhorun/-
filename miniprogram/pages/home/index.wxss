@@ -5,50 +5,241 @@ page{
   height: 100%;
 }
 
-.plusContainer{
-  position: absolute;
-  top: 15%;
-  display: flex;
+.imgWrapper{
+  position: fixed;
+  top: 0;
+  height: 180rpx;
   width: 100%;
-  justify-content: space-around;
+  z-index: 100;
 }
-.getResContainer{
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  bottom: 20%;
+
+.bg{
+  height: 100%;
   width: 100%;
-  padding-left: auto;
-  padding-right: auto;
-}
-.resBtn{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  box-shadow: 0 8px 12px green;
 }
 
-.textTip{
+.coverlogo{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  margin-bottom: 8px;
-  word-wrap: break-word;
-  word-break: break-all;
-}
-
-.icon{
-  background-color: bisque;
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 8px 12px bisque;
-}
-
-.card{
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.txtandlogo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.logo{
+  width: 40px;
+  height: 40px;
+}
+
+.covertittle{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.hnzy{
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
+.tittle{
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+.wrapper{
+  height: 100%;
+  width: 100%;
+  margin-top: 180rpx;
+}
+.lunbo{
+  position: relative;
+  width: 100%;
+  height: 25%;
+}
+
+.lunbotu1{
+  width: 100%;
+  height: 100%;
+}
+
+.iconright{
+  position: absolute;
+  top: 50%;
+  right: 5%;
+}
+.iconleft{
+  position: absolute;
+  top: 50%;
+  left: 5%;
+}
+
+.import{
+  display: flex;
+  width: 100%;
+}
+
+.importLeft{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.importleftbuttonwrapper{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.importtxt{
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.importRight{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+.importrightbuttonwrapper{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+.listWrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border-right: black solid 1px;
+}
+
+.firsttittle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.firsttittleleft{
+  padding: 10px;
+  background-color: rgb(204,204,204);
+}
+
+.items{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+}
+
+.itemcontent{
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+
+.randomwrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.randomcenter{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.reswrapper{
+  width: 100%;
+
+}
+
+.restittle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.restittleleft{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(204,204,204);
+}
+.restittlecenter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.restittleright{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(204,204,204);
+}
+
+.resitemswrapper{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.resitems{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 33%;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.copyurlwrapper{
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+}
+
+.saveurl{
+  font-weight: bold;
 }

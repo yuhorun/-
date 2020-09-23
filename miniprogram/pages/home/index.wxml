@@ -1,21 +1,84 @@
 <!--index.wxml-->
-<view class="plusContainer">
-    <view class="card">
-        <text class="textTip">{{peopleFileName?peopleFileName:"选择人员表"}}</text>
-        <van-icon name="{{peopleFileName?'success':'plus'}}" size="50" class="icon" bindtap="peoplePlus"/>
+    <view class="imgWrapper">
+        <image src="../../static/backgroud.png" mode="scaleToFill" class="bg"></image>
+        <view class="coverlogo">
+            <view class="txtandlogo">
+                <image mode="aspectFit" src="../../static/he.png" class="logo"></image>
+                <text class="hnzy">湖南中烟</text>
+            </view>
+        </view>
+        <view class="covertittle">
+            <text class="tittle">随机派</text>
+        </view>
     </view>
-    <view class="card">
-        <text class="textTip">{{carFileName?carFileName:"选择岗位表"}}</text>
-        <van-icon name="{{carFileName?'success':'plus'}}" size="50" class="icon" bindtap="carPlus"/>
+<view class="wrapper">
+    <view class="lunbo">
+        <van-icon color="white" class="iconright" size="30" bind:click="rightImag" name="arrow" />
+        <van-icon color="white"  class="iconleft" size="30" bind:click="leftImag" name="arrow-left" />
+        <image src="{{slideImg[imgIndex]}}" mode="scaleToFill" class="lunbotu1"></image>
     </view>
+
+    <view class="import">
+        <view class="importLeft">
+            <view class="importleftbuttonwrapper" bindtap="clickleftimport">
+                <van-icon size="30" color="rgb(146,55,98)" name="add" />
+                <text class="importtxt">导入人员名单</text>
+            </view>
+            <view class="listWrapper">
+                <view class="firsttittle">
+                    <view class="firsttittleleft">编号</view>
+                    <view class="firsttittleright">姓名</view>
+                </view>
+                <view wx:for="{{people}}" wx:key="unique" style="width:100%">
+                    <view class="items">
+                        <view class="itemcontent">{{item.id}}</view>
+                        <view class="itemcontent">{{item.name}}</view>
+                    </view>
+                </view>
+             </view>
+        </view>
+        <view class="importRight">
+            <view class="importrightbuttonwrapper" bindtap="clickrightimport">
+                <van-icon size="30" color="rgb(146,55,98)" name="add" />
+                <text class="importtxt">导入岗位名单</text>
+            </view>
+             <view class="listWrapper">
+                <view class="firsttittle">
+                    <view class="firsttittleleft">班次</view>
+                    <view class="firsttittleright">人数</view>
+                </view>
+                <view wx:for="{{position}}" wx:key="unique" style="width:100%">
+                    <view class="items">
+                        <view class="itemcontent">{{item.position}}</view>
+                        <view class="itemcontent">{{item.number}}</view>
+                    </view>
+                </view>
+             </view>
+        </view>
+    </view>
+
+    <view class="randomwrapper">
+       <view class="randomcenter" bindtap="randomassign">
+            <van-icon color="rgb(135,60,91)" size="30" name="play" />
+            <text>岗位随机分配</text>
+       </view>
+    </view>
+
+    <view wx:if="{{url!==''}}" class="reswrapper">
+        <view class="restittle">
+            <view class="restittleleft">编号</view>
+            <view class="restittlecenter">姓名</view>
+            <view class="restittleright">结果</view>
+       </view>
+        <view wx:for="{{random}}" wx:key="unique" class="resitemswrapper">
+            <view class="resitems">{{item.id}}</view>
+            <view class="resitems">{{item.name}}</view>
+            <view class="resitems">{{item.position}}</view>
+        </view>
+    </view>
+    <view wx:if="{{url!==''}}" class="copyurlwrapper" bindtap="copyclick">
+        <view class="saveurl">结果保存至本地</view>
+    </view>
+    <van-dialog id="van-dialog"> </van-dialog>
 </view>
 
-<view>
-    <view class="getResContainer">
-        <button type="primary" class="resBtn" bindtap="getRes">
-            获取分配结果
-        </button>
-    </view>
-</view>
-
-<van-dialog id="van-dialog"> </van-dialog>
